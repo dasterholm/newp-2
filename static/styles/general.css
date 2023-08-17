@@ -1,0 +1,110 @@
+.post-title {
+    display: inline;
+    margin-bottom: 0;
+}
+
+.nav-link .ico {
+    margin-right: 0;
+}
+
+.ico {
+    margin-right: 10px;
+}
+
+.required:after {
+    content: '*';
+    color: red;
+}
+
+.form-signing,
+.form-signing-up {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+/* .btn.ico-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+} */
+
+.ico-google {
+    width: 1em;
+    height: 1em;
+}
+
+.errorlist {
+    list-style: none;
+    color: red;
+    padding: 0;
+}
+
+.nav-item span {
+    display: block;
+    padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+    font-size: var(--bs-nav-link-font-size);
+    font-weight: var(--bs-nav-link-font-weight);
+}
+
+small {
+    font-size: 0.5em;
+}
+
+.font-italic {
+    font-style: italic;
+}
+.card-deck {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+.card-deck .card {
+    min-width: 220px;
+}
+
+.profile.card-deck .card {
+    flex:0;
+}
+
+.box-shadow {
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
+}
+
+
+.long-string-for-cash-checking {
+    word-wrap: break-word;
+}
+
+@media (min-width: 576px) {
+.card-deck .card {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 0%;
+    flex: 1 0 0%;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-right: 15px;
+    margin-bottom: 0;
+    margin-left: 15px;
+}
+.card-deck {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+}

@@ -1,0 +1,15 @@
+{% extends 'defaultLayout.html' %} 
+ 
+{% block title %}
+{{ post.title}}
+{% endblock title %}
+ 
+{% block abracadabra %}
+<h1>{{ post.title }}</h1>
+<p>{{ post.text }}</p>
+<p>Опубликовано {{ post.dateCreation | date:'d.m.y в h:i' }}</p>
+<p> {{ post.author }}</p>
+
+#TODO: КНОПКИ LIKE|DISLIKE
+
+{% endblock abracadabra %}

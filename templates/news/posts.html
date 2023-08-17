@@ -1,0 +1,137 @@
+{% extends 'defaultLayout.html' %} 
+{% load static %}
+
+{% load custom_filters %}
+
+{% block title %}
+    Статьи
+{% endblock title %}
+
+{% block abracadabra %}
+
+
+            <p>Проверка фильтра цензурирования обсценной лексики:
+                {% with string='ты ж бля' %}
+                    {{ string|censor }}
+                {% endwith %}
+            </p>                          
+            <p>
+                 {% if user.is_authenticated %}
+                    залогинен
+                    {% else %}
+                    не залогинен
+                {% endif %}
+            </p>
+            <p>
+                {% if is_author %}
+                   Автор
+                {% else %}
+                    Не автор
+                {% endif %}
+            </p>
+        {% if posts %}
+        <div class="btn-toolbar justify-content-between border-bottom pb-2 mb-5">
+           <h2 class="post-title">Всего статей <span>{{ paginator.count }} штук(и)</span> </h2>
+            {% if is_author %}
+                <div>
+                    <a href="{% url 'news:create' %}" class="btn btn-success">
+                    <svg class="ico text-white" width="24" height="24" fill="currentColor">
+                        <use xlink:href="{% static 'img/bootstrap-icons.svg' %} #journal-medical"></use>
+                    </svg>Добавить статью
+                </a>  
+                <a href="{% url 'downgrade' %}" class="btn btn-outline-dark"> 
+                    <svg class="ico text-dark" width="24" height="24" fill="currentColor">
+                        <use xlink:href="{% static 'img/bootstrap-icons.svg' %} #journal-minus"></use>
+                    </svg>уволиться из  авторов
+                    </a>
+                </div>
+            {% else %} 
+                <a href="{% url 'upgrade' %}" class="btn btn-dark">
+                    <svg class="ico text-white" width="24" height="24" fill="currentColor">
+                        <use xlink:href="{% static 'img/bootstrap-icons.svg' %} #journal-arrow-up"></use>
+                    </svg>Стать автором
+                </a>    
+            {% endif%}        
+        </div>
+        
+        {% if paginator.count > 5 %}            
+        <nav>
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">Первая страница</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active">
+                            <a class="page-link">{{ num }}</a>
+                        </li>
+                       
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                    {% endif %}
+              {% endfor %}
+              {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li> 
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Последняя</a>
+                    </li>                   
+                   
+              {% endif %}
+              
+            </ul>
+          </nav>            
+        {% endif%} 
+            <h3>Сегодня:  {{ time_now|date:'M d Y' }}</h3>
+            {% comment %} <h2>Raise dbError: {{ dbError }}</h2> {% endcomment %}
+            <!-- <h3> За дату: {{ time_now|date:'M d Y' }}</h3> -->
+            {% comment %} {% for post in all_posts %} {% endcomment %}
+             {% for post in posts %}
+            <div class="row g-4 py-5 row-cols-1">
+                <div class="col d-flex align-items-start">           
+                    <div>
+                        <h3 class="fs-2">{{ post.title }}</h3>
+                        <p>
+                            {% for category in post.category.all %}                            
+                                <span class="badge text-bg-secondary">{{ category.name }}</span>
+                            {% endfor%}
+                        </p>
+                        <p>{{ post.get_category_type}} от {{ post.dateCreation | date:'d.m.y' }} от {{ post.author }}</p>
+                        <p>{{ post.preview | truncatechars:50 }}</p>
+                        {% if is_author %}
+                            <a href="{% url 'news:update' post.id %}" class="btn btn-outline-primary btn-sm">
+                             <svg class="ico" width="16" height="16" fill="currentColor">
+                                <use xlink:href="{% static 'img/bootstrap-icons.svg' %} #journal-text"></use>
+                            </svg>
+                            Редактировать</a>
+                            <a href="{% url 'news:delete' post.id %}" class="btn btn-outline-danger btn-sm">
+                                 <svg class="ico" width="16" height="16" fill="currentColor">
+                                    <use xlink:href="{% static 'img/bootstrap-icons.svg' %} #journal-x"></use>
+                                </svg>
+                            Удалить</a>
+                        {% endif%}     
+                        <a href="{% url 'news:post' post.id %}" class="btn btn-primary btn-sm">
+                            Читать
+                        </a>
+                    </div>
+                </div>  
+            </div>
+            {% endfor %}
+        {% else %}
+            <h2 class="pb-2 border-bottom">Статей пока нет</h2>           
+         {% endif %}
+         
+          
+{% endblock abracadabra %}
